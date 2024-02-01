@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { BaseCard, MovieCard } from "@/app.organizer";
 import { useMoviesStore } from "@/stores/movies";
 
 const backgroundImage = ref("");
 
-const storeMovies =  useMoviesStore();
-
-const movies = computed(() => storeMovies.moviesTrends)
-const getTrends = storeMovies.getTrends;
+const moviesStore =  useMoviesStore();
 
 const updateBackgroundImage = (imagePath: string) => {
   backgroundImage.value = imagePath;
 };
 
-onMounted(() => getTrends());
+onMounted(() => moviesStore.getTrends());
 </script>
 
 <template>
@@ -35,7 +32,7 @@ onMounted(() => getTrends());
       <BaseCard title="Current trends" :external-title="true">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <MovieCard
-            v-for="(movie, index) in movies"
+            v-for="(movie, index) in moviesStore.state.moviesTrends"
             :key="'m-' + index"
             class="a-03 fadeInUp"
             :class="'d-' + index * 100"

@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent, Ref } from 'vue'
-// import { useInfiniteScroll } from "@vueuse/core";
 import { CategoriesTabs, MovieCard } from "@/app.organizer";
 import { TCategoryItem } from "@/types/movies";
 import { ROUTE_DASHBOARD_MOVIES_LIST } from "@/app.routes";
@@ -49,13 +48,13 @@ export default  defineComponent({
             return useMoviesStore();
         },
         currentPage() {
-            return this.storeMovies.currentPage;
+            return this.storeMovies.state.currentPage;
         },
          moviesGenres() {
-            return this.storeMovies.moviesGenres;
+            return this.storeMovies.state.moviesGenres;
         },
          end() {
-            return this.storeMovies.end;
+            return this.storeMovies.state.end;
         }
     },
     methods: {

@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const isFavorite = computed(() => {
-    return !!movies.favorites.find((e) => e.id === props.data.id);
+    return !!movies.state.favorites.find((e) => e.id === props.data.id);
 });
 
 const getFavoriteIcon = computed(() => {
