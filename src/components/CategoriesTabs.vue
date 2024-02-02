@@ -4,7 +4,7 @@ import { TCategoryItem } from "@/types/movies";
 
 const props = defineProps<{
   items: TCategoryItem[];
-  value: TCategoryItem | undefined;
+  value: TCategoryItem | null;
 }>();
 
 const emit = defineEmits<{
