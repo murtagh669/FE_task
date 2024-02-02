@@ -29,4 +29,4 @@ export const GET_MOVIES_POPULAR: RequestConstructor<{}> = {
       default: apiKey,
     },
   },
-} as 
+}
