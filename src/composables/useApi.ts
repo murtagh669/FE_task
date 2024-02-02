@@ -1,24 +1,28 @@
-import useRequest from './helpers/useRequest';
-import useResponse from './helpers/useResponse';
+import { RequestConfig, RequestConstructor, RequestValues } from "./helpers/types";
+import useRequest from "./helpers/useRequest";
+import useResponse from "./helpers/useResponse";
 
-export default (requestConstructor: any, requestValues: any = {}):
-    Promise<{ status: string; isSuccess: boolean; data: any; errors: object; } | any> | any => {
+const useApi = <
+  TRequestValues extends RequestValues
+>(
+  requestConstructor: RequestConstructor<TRequestValues>,
+  requestConfig?: RequestConfig<TRequestValues>
+):
+  | Promise<
+      { status: string; isSuccess: boolean; data: any; errors: object } | any
+    >
+  | any => {
+  const request = useRequest(requestConstructor, requestConfig);
 
-    let response;
-    let valuesKeys:any = requestValues ? Object.keys(requestValues) : {};
+  if (!request) {
+    throw new Error("Something went wrong with your API request.");
+  }
 
-    // Shortcut for POST : If no 'params','query','body' keys in requestValues object, so it is 'body' object itself.
-    if (valuesKeys.length && !valuesKeys.some((key: any) => ['path', 'params', 'query', 'body'].includes(key))) {
-        const body = { ...requestValues };
-        requestValues = {};
-        requestValues.body = body;
-    }
-
-    const request = useRequest(requestConstructor, requestValues);
-    console.log('►►►', request.method.toUpperCase(), request.path, requestConstructor, requestValues);
-
-    if (request)
-        response = useResponse({ method: request.method, path: request.path, exec: request.exec });
-    else throw new Error('Something went wront with your API request.');
-    return response;
+  return useResponse({
+    method: request.method,
+    path: request.path,
+    exec: request.exec,
+  });
 };
+
+export default useApi;

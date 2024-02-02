@@ -41,7 +41,7 @@ const handleScroll = async (event: UIEvent) => {
   ) {
     if (!end.value && !isLoadingNextPage.value) {
       isLoadingNextPage.value = true;
-      const category = currentTab.value || null;
+      const category = currentTab.value;
       await getGenres(category.value, currentPage.value + 1);
       isLoadingNextPage.value = false;
     }
