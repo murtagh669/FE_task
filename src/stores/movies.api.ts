@@ -3,7 +3,10 @@ import axios from "axios";
 const PATH_MOVIE_DB = "https://api.themoviedb.org/3/";
 const apiKey = import.meta.env.VITE_DBMOVIE_API_KEY;
 
-export const GET_MOVIES_GENRES = {
+export const GET_MOVIES_GENRES: RequestConstructor<{
+    query: { with_genres: string | null; page: number; api_key?: string };
+  }>
+   = {
   api: axios,
   method: "GET",
   path: `${PATH_MOVIE_DB}discover/movie`,
@@ -14,11 +17,9 @@ export const GET_MOVIES_GENRES = {
     page: {},
     with_genres: {},
   },
-} as RequestConstructor<{
-  query: { with_genres: string | null; page: number; api_key?: string };
-}>;
+};
 
-export const GET_MOVIES_POPULAR = {
+export const GET_MOVIES_POPULAR: RequestConstructor<{}> = {
   api: axios,
   method: "GET",
   path: `${PATH_MOVIE_DB}movie/popular`,
@@ -28,4 +29,4 @@ export const GET_MOVIES_POPULAR = {
       default: apiKey,
     },
   },
-} as RequestConstructor<{}>;
+} as 
